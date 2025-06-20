@@ -1,0 +1,8 @@
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-weight: normal;
+  font-size: 30px;
+  line-height: 1.1;
+}

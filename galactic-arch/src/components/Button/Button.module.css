@@ -1,0 +1,96 @@
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.button {
+  padding: 20px 28px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  font-size: 35px;
+  line-height: 1.1;
+  font-weight: 500;
+  margin-block-start: 20px;
+  min-inline-size: 360px;
+  min-block-size: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--green);
+  color: inherit;
+}
+
+.button:disabled {
+  cursor: default;
+}
+
+.loader {
+  width: 20px;
+  height: 20px;
+  border: 3px solid var(--white);
+  border-radius: 50%;
+  border-top-color: var(--green);
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.button.loading {
+  background-color: var(--purple-300);
+}
+
+.button.success {
+  background-color: var(--pang);
+  min-inline-size: min-content;
+  font-weight: normal;
+  padding-block-start: 15px;
+  padding-block-end: 15px;
+  border-radius: 10px;
+}
+
+.button.error {
+  background-color: var(--orange);
+  min-inline-size: min-content;
+  font-weight: normal;
+  padding-block-start: 15px;
+  padding-block-end: 15px;
+  border-radius: 10px;
+}
+
+.closeButton {
+  position: relative;
+  inline-size: min-content;
+  inline-size: 70px;
+  block-size: 70px;
+  border-radius: 10px;
+  background-color: var(--gray-300);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeButton::before,
+.closeButton::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 2px;
+  background-color: var(--white);
+}
+
+.closeButton::before {
+  transform: rotate(45deg);
+}
+
+.closeButton::after {
+  transform: rotate(-45deg);
+}

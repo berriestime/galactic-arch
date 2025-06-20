@@ -1,0 +1,33 @@
+.generatorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.description {
+  font-size: 30px;
+  line-height: 1.1;
+  font-weight: normal;
+}
+
+.start {
+  background-color: var(--green);
+  color: currentColor;
+}
+
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center
+}
+
+.statusMessage {
+  color: inherit;
+  font-size: 35px;
+}
+
+.errorMessage {
+  color: var(--orange);
+  font-size: 35px;
+}
