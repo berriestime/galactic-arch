@@ -9,7 +9,7 @@ type ButtonProps = {
   onClose?: () => void;
 };
 
-export const Button = ({
+const Button = ({
   children,
   onClick,
   disabled = false,
@@ -45,3 +45,5 @@ export const Button = ({
     )}
   </div>
 );
+
+export { Button }

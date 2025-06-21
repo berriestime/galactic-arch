@@ -1,0 +1,29 @@
+.uploadLabel {
+  padding: 15px 50px;
+  background-color: var(--white);
+  color: currentColor;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 35px;
+  line-height: 1.1;
+  font-weight: normal;
+}
+
+.uploadLabel.disabled {
+  background-color: var(--purple-300);
+  color: currentColor;
+  cursor: default;
+}
+
+.uploadLabel.hasFile {
+  background-color: var(--purple-300);
+}
+
+.uploadInput {
+  position: absolute;
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  z-index: -1;
+}

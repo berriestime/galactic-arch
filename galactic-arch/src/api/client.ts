@@ -1,3 +1,5 @@
+// TODO @berriestime оптимицировать запросы
+
 const API_BASE_URL = 'http://localhost:3000';
 
 const fetchAPI = async (endpoint: string, params: Record<string, any> = {}): Promise<any> => {
