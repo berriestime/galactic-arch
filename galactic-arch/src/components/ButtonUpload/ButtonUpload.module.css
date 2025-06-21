@@ -1,3 +1,11 @@
+.buttonContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  align-items: flex-end;
+}
+
 .uploadLabel {
   padding: 15px 50px;
   background-color: var(--white);
@@ -7,6 +15,10 @@
   font-size: 35px;
   line-height: 1.1;
   font-weight: normal;
+    display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
 }
 
 .uploadLabel.disabled {
@@ -26,4 +38,59 @@
   opacity: 0;
   overflow: hidden;
   z-index: -1;
+  display: none;
+}
+
+.closeButton {
+  position: relative;
+  inline-size: min-content;
+  inline-size: 70px;
+  block-size: 70px;
+  border-radius: 10px;
+  background-color: var(--gray-300);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeButton::before,
+.closeButton::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 2px;
+  background-color: var(--white);
+}
+
+.closeButton::before {
+  transform: rotate(45deg);
+}
+
+.closeButton::after {
+  transform: rotate(-45deg);
+}
+
+.loader {
+  width: 20px;
+  height: 20px;
+  border: 3px solid var(--white);
+  border-radius: 50%;
+  border-top-color: var(--green);
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.uploadLabel.uploading {
+  background-color: var(--purple-300);
+}
+
+.uploadLabel.complete {
+  background-color: var(--pang);
 }

@@ -1,0 +1,16 @@
+.gridContainer {
+  width: 100%;
+  margin-top: 32px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 40px;
+  row-gap: 10px;
+}
+
+.placeholder {
+  font-size: 40px;
+  color: var(--purple-300);
+}

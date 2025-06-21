@@ -6,14 +6,22 @@ type ButtonUploadProps = {
   disabled?: boolean;
   className?: string;
   hasFile?: boolean;
+  onClose?: () => void;
+  isDragging?: boolean;
+  isLoading?: boolean;
+  isComplete?: boolean;
 };
 
-const ButtonUpload = ({ 
-  children, 
-  onFileSelect, 
+const ButtonUpload = ({
+  children,
+  onFileSelect,
   disabled = false,
   hasFile = false,
-  className = ''
+  className = '',
+  onClose,
+  isDragging = false,
+  isLoading = false,
+  isComplete = false,
 }: ButtonUploadProps) => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -21,22 +29,37 @@ const ButtonUpload = ({
   };
 
   return (
-    <label className={`
-      ${styles.uploadLabel} 
-      ${disabled ? styles.disabled : ''} 
-      ${hasFile ? styles.hasFile : ''}
-      ${className}
-    `}>
-      {children}
-      <input
-        type="file"
-        accept=".csv, text/csv"
-        onChange={handleFileChange}
-        disabled={disabled}
-        className={styles.uploadInput}
-      />
-    </label>
+    <div className={`${styles.buttonContainer} ${isDragging ? styles.dragging : ''}`}>
+      <label
+        className={`
+          ${styles.uploadLabel} 
+          ${disabled ? styles.disabled : ''} 
+          ${hasFile ? styles.hasFile : ''}
+          ${isLoading ? styles.uploading : ''}
+          ${isComplete ? styles.complete : ''}
+          ${className}
+        `}
+      >
+        {isLoading ? (
+          <>
+            <span className={styles.loader} />
+          </>
+        ) : (
+          children
+        )}
+        <input
+          type="file"
+          accept=".csv, text/csv"
+          onChange={handleFileChange}
+          disabled={disabled}
+          className={styles.uploadInput}
+        />
+      </label>
+      {!isLoading && hasFile && (
+        <button className={styles.closeButton} onClick={onClose} aria-label="Close"></button>
+      )}
+    </div>
   );
 };
 
-export { ButtonUpload }
+export { ButtonUpload };

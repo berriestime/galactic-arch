@@ -6,6 +6,7 @@
 }
 
 .button {
+  min-inline-size: 360px;
   padding: 20px 28px;
   border-radius: 25px;
   border: none;
@@ -14,7 +15,6 @@
   line-height: 1.1;
   font-weight: 500;
   margin-block-start: 20px;
-  min-inline-size: 360px;
   min-block-size: 70px;
   display: flex;
   align-items: center;
@@ -93,4 +93,10 @@
 
 .closeButton::after {
   transform: rotate(-45deg);
+}
+
+/* DISABLED GOOD */
+.disabled2 {
+  background-color: var(--silver);
+  color: var(--gray-200);
 }

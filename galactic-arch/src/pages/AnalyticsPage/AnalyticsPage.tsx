@@ -3,6 +3,7 @@ import { ButtonUpload } from '../../components/ButtonUpload/ButtonUpload';
 import styles from './AnalyticsPage.module.css';
 import { fetchAggregate } from '../../api/aggregate';
 import { Button } from '../../components/Button/Button';
+import { ResultsGrid } from '../../components/ResultsGrid/ResultsGrid';
 
 const AnalyticsPage = (): React.ReactElement => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -12,6 +13,17 @@ const AnalyticsPage = (): React.ReactElement => {
   const resultRef = useRef<any[]>([]);
   const [partialResults, setPartialResults] = useState<any[]>([]);
   const [isDragging, setIsDragging] = useState(false);
+  const [isComplete, setIsComplete] = useState(false);
+
+  const handleClose = useCallback(() => {
+    setSelectedFile(null);
+    setResult([]);
+    resultRef.current = [];
+    setPartialResults([]);
+    setError(null);
+    setIsDragging(false);
+    setIsComplete(false);
+  }, []);
 
   const handleFileSelect = useCallback((file: File) => {
     if (file && (file.type === 'text/csv' || file.name.endsWith('.csv'))) {
@@ -66,6 +78,7 @@ const AnalyticsPage = (): React.ReactElement => {
 
     setIsLoading(true);
     setError(null);
+    setIsComplete(false);
     setResult([]);
     resultRef.current = [];
     setPartialResults([]);
@@ -77,6 +90,7 @@ const AnalyticsPage = (): React.ReactElement => {
       });
 
       setResult(aggregationResult);
+      setIsComplete(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Произошла ошибка');
       console.error('Ошибка агрегации:', err);
@@ -86,59 +100,73 @@ const AnalyticsPage = (): React.ReactElement => {
   };
 
   const renderResults = () => {
-    const dataToRender = partialResults.length > 0 ? partialResults : result;
-    if (dataToRender.length === 0) return null;
+  const dataToRender = partialResults.length > 0 ? partialResults : result;
 
-    return (
-      <div className={styles.result}>
-        <h3>Результаты агрегации:</h3>
-        <div className={styles.resultContainer}>
-          {dataToRender.map((item, index) => (
-            <div key={index} className={styles.resultItem}>
-              <pre>{JSON.stringify(item, null, 2)}</pre>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  };
+  // Объединяем все частичные результаты в один объект
+  const combinedResults = dataToRender.length > 0 
+    ? dataToRender.reduce((acc, item) => ({ ...acc, ...item }), {})
+    : undefined;
+
+  return <ResultsGrid data={combinedResults} />;
+};
 
   const uploadAreaClass = useMemo(() => {
-    return `${styles.backgroundUpload} ${isDragging ? styles.dragging : ''} ${isLoading ? styles.disabled : ''} ${selectedFile ? styles.dragged : ''}`;
+    return `${styles.backgroundUpload} 
+            ${isDragging ? styles.dragging : ''} 
+            ${isLoading ? styles.disabled : ''}`;
   }, [isDragging, isLoading]);
 
   return (
-    <div>
-      <div className={styles.description}>
-        Загрузите <span className={styles.descriptionAccent}>csv</span> файл и получите{' '}
-        <span className={styles.descriptionAccent}>полную информацию</span> о состоянём за сверхнизкое время
-      </div>
+    <>
+      <div className={styles.main}>
+        <div className={styles.description}>
+          Загрузите <span className={styles.descriptionAccent}>csv</span> файл и получите{' '}
+          <span className={styles.descriptionAccent}>полную информацию</span> о состоянём за сверхнизкое время
+        </div>
 
-      <div
-        className={uploadAreaClass}
-        onDragEnter={handleDragEnter}
-        onDragLeave={handleDragLeave}
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
-      >
-        <ButtonUpload onFileSelect={handleFileSelect} disabled={isLoading} hasFile={!!selectedFile}>
-          {selectedFile ? selectedFile.name : 'Загрузить файл'}
-        </ButtonUpload>
-        
-        <div className={styles.uploadMessage}>{selectedFile ? 'Файл загружен!' : 'или перетащите сюда'}</div>
-      </div>
-
-      {/* <button className={styles.buttonSend} onClick={handleSubmit} disabled={isLoading || !selectedFile}>
-        {isLoading ? 'Обработка...' : 'Отправить'}
-      </button> */}
-      <div>
-        <Button onClick={handleSubmit}>Отправить</Button>
-        {!isLoading && <div>Здесь появятся хайлайты</div> }
+        <div
+          className={uploadAreaClass}
+          {...(!selectedFile
+            ? {
+                onDragEnter: handleDragEnter,
+                onDragLeave: handleDragLeave,
+                onDragOver: handleDragOver,
+                onDrop: handleDrop,
+              }
+            : {})}
+        >
+          <div style={{ pointerEvents: isDragging ? 'none' : 'auto' }}>
+            <ButtonUpload
+              onFileSelect={!selectedFile ? handleFileSelect : undefined}
+              disabled={isLoading || !!selectedFile}
+              hasFile={!!selectedFile}
+              onClose={handleClose}
+              isDragging={isDragging && !selectedFile}
+              isLoading={isLoading}
+              isComplete={isComplete}
+            >
+              {selectedFile ? selectedFile.name : 'Загрузить файл'}
+            </ButtonUpload>
+            <div className={styles.uploadMessage}>
+              {selectedFile
+                ? isLoading
+                  ? 'идёт парсинг файла'
+                  : isComplete
+                    ? 'готово!'
+                    : 'Файл загружен!'
+                : 'или перетащите сюда'}
+            </div>
+          </div>
+        </div>
+        {!isLoading && !isComplete && (
+          <Button onClick={handleSubmit} disabled2={!selectedFile}>
+            Отправить
+          </Button>
+        )}
         {renderResults()}
+        {error && <div className={styles.error}>{error}</div>}
       </div>
-
-      {error && <div className={styles.error}>{error}</div>}
-    </div>
+    </>
   );
 };
 

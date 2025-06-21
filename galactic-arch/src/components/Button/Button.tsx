@@ -7,6 +7,7 @@ type ButtonProps = {
   disabled?: boolean;
   status?: 'idle' | 'loading' | 'success' | 'error';
   onClose?: () => void;
+  disabled2?: boolean;
 };
 
 const Button = ({
@@ -15,13 +16,14 @@ const Button = ({
   disabled = false,
   status = 'idle',
   onClose,
+  disabled2,
 }: ButtonProps): React.ReactElement => (
   <div className={styles.buttonContainer}>
     <button
       type="button"
       onClick={onClick}
       disabled={disabled || status !== 'idle'}
-      className={`${styles.button} ${styles[status]}`}
+      className={`${styles.button} ${styles[status]} ${disabled2 ? styles.disabled2 : ''}`}
     >
       {status === 'loading' ? (
         <>
