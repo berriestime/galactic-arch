@@ -1,5 +1,6 @@
 .gridContainer {
-  width: 100%;
+  width: 1082px;
+  background-color: transparent;
   margin-top: 32px;
 }
 
@@ -16,4 +17,35 @@
   flex: 1 0 auto;
   display: flex;
   align-items: center;
+}
+
+.gridContainer {
+  width: 100%;
+  background-color: transparent;
+  margin-top: 32px;
+}
+
+.analyticsContainer {
+  max-width: 1840px;
+}
+
+.historyContainer {
+  max-width: 1000px;
+  background-color: var(--white);
+  padding: 40px;
+  border-radius: 45px;
+}
+
+.grid {
+  display: grid;
+  gap: 10px;
+}
+
+.analyticsGrid {
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 40px;
+}
+
+.historyGrid {
+  grid-template-columns: 1fr;
 }

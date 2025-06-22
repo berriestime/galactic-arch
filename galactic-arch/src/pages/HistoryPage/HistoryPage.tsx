@@ -29,6 +29,7 @@ const HistoryPage = () => {
   const navigate = useNavigate();
 
   const handleRecordClick = (record: HistoryRecord) => {
+    if (record.status !== 'success') return;
     setSelectedRecord(record);
     setIsModalOpen(true);
   };
@@ -48,7 +49,9 @@ const HistoryPage = () => {
             {records.map((record) => (
               <div
                 key={record.id}
-                className={`${styles.record} ${styles[record.status]}`}
+                className={`${styles.record} ${styles[record.status]} ${
+                  record.status !== 'success' ? styles.notClickable : ''
+                }`}
                 onClick={() => handleRecordClick(record)}
               >
                 <div className={styles.recordContent}>
@@ -92,34 +95,7 @@ const HistoryPage = () => {
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         {selectedRecord && (
           <div className={styles.modalContent}>
-            <h2>{selectedRecord.fileName}</h2>
-            <div className={styles.modalMeta}>
-              <p>
-                <strong>Дата:</strong> {formatDateTime(selectedRecord.date)}
-              </p>
-              <p>
-                <strong>Статус:</strong>{' '}
-                <span className={selectedRecord.status === 'success' ? styles.successText : styles.errorText}>
-                  {selectedRecord.status === 'success' ? 'Успешно' : 'Ошибка'}
-                </span>
-              </p>
-
-              {selectedRecord.error && (
-                <div className={styles.error}>
-                  <strong>Ошибка:</strong> {selectedRecord.error}
-                </div>
-              )}
-            </div>
-
-            {selectedRecord.data && (
-              <>
-                <h3>Результаты:</h3>
-                <button type="button" onClick={() => console.log(selectedRecord.data)}>
-                  Показать в консоли
-                </button>
-                <ResultsGrid data={selectedRecord.data} />
-              </>
-            )}
+            {selectedRecord.data && <ResultsGrid data={selectedRecord.data} variant="history" />}
           </div>
         )}
       </Modal>

@@ -118,14 +118,6 @@
   color: var(--red);
 }
 
-.modalContent {
-  padding: 1rem;
-}
-
-.modalMeta {
-  margin-bottom: 1.5rem;
-}
-
 .successText {
   color: var(--green);
 }
@@ -142,4 +134,17 @@
 .activeSmile {
   fill: green;
   color: green;
+}
+
+.modalContent {
+  width: 100%;
+}
+
+.notClickable {
+  cursor: default;
+}
+
+.modalContent {
+  width: 100%;
+  position: relative; /* Для правильного позиционирования */
 }
