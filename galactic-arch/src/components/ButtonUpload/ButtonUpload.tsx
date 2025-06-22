@@ -10,6 +10,7 @@ type ButtonUploadProps = {
   onClose?: () => void;
   isDragging?: boolean;
   status?: 'idle' | 'loading' | 'success' | 'error';
+  initialColor?: 'white' | 'green';
 };
 
 const ButtonUpload = ({
@@ -22,6 +23,7 @@ const ButtonUpload = ({
   onClose,
   isDragging = false,
   status = 'idle',
+  initialColor = 'white',
 }: ButtonUploadProps) => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -38,6 +40,7 @@ const ButtonUpload = ({
           ${status === 'loading' ? styles.loading : ''}
           ${status === 'success' ? styles.success : ''}
           ${status === 'error' ? styles.error : ''}
+          ${status === 'idle' && initialColor === 'green' ? styles.initialGreen : ''}
           ${className}
         `}
         onClick={

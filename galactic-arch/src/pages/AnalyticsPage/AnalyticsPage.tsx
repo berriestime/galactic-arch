@@ -172,11 +172,9 @@ const AnalyticsPage = (): React.ReactElement => {
             <ButtonUpload
               disabled={isLoading || !!selectedFile}
               hasFile={!!selectedFile}
-              isComplete={false}
-              // isComplete={isComplete}
+              isComplete={isComplete}
               isDragging={isDragging && !selectedFile}
-              isLoading={false}
-              // isLoading={isLoading}
+              isLoading={isLoading}
               onClose={handleClose}
               onFileSelect={!selectedFile ? handleFileSelect : undefined}
               status={status}

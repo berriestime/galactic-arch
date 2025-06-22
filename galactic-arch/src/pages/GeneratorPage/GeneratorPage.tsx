@@ -28,19 +28,13 @@ const GeneratorPage = (): React.ReactElement => {
       <div className={styles.description}>Сгенерируйте готовый csv-файл нажатием одной кнопки</div>
 
       <div className={styles.buttonGroup}>
-        {/* <Button onClick={handleClick} status={status} onClose={handleClose}>
-          Начать генерацию
-        </Button>
-
-        {status === 'loading' && <div className={styles.statusMessage}>идет процесс генерации</div>}
-        {status === 'success' && <div className={styles.statusMessage}>файл сгенерирован!</div>}
-        {status === 'error' && <div className={styles.errorMessage}>упс, не то...</div>} */}
         <ButtonUpload
           isComplete={status === 'success'}
           isLoading={status === 'loading'}
           onClick={handleClick}
           onClose={handleClose}
           status={status}
+          initialColor="green"
         >
           Начать генерацию
         </ButtonUpload>

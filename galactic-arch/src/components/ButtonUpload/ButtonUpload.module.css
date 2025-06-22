@@ -164,3 +164,8 @@
     transform: rotate(360deg);
   }
 }
+
+.uploadLabel.initialGreen {
+  background-color: var(--green);
+  color: currentColor;
+}

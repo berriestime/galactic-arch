@@ -18,10 +18,6 @@ const formatDateWithDots = (dateString: string): string => {
   return `${day}.${month}.${year}`;
 };
 
-const formatDateTime = (dateString: string): string => {
-  return new Date(dateString).toLocaleString('ru-RU');
-};
-
 const HistoryPage = () => {
   const { records, removeRecord, clearHistory } = useHistoryStore();
   const [selectedRecord, setSelectedRecord] = useState<HistoryRecord | null>(null);
@@ -85,7 +81,7 @@ const HistoryPage = () => {
           </div>
           <div className={styles.controls}>
             <Button onClick={() => navigate('/generator')}>Сгенерировать больше</Button>
-            <Button onClick={clearHistory} className={styles.clearButton} status="clear">
+            <Button onClick={clearHistory} className={styles.clearButton}>
               Очистить всё
             </Button>
           </div>
