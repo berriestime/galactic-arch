@@ -81,7 +81,7 @@ const HistoryPage = () => {
           </div>
           <div className={styles.controls}>
             <Button onClick={() => navigate('/generator')}>Сгенерировать больше</Button>
-            <Button onClick={clearHistory} className={styles.clearButton}>
+            <Button onClick={clearHistory}>
               Очистить всё
             </Button>
           </div>
