@@ -1,54 +1,119 @@
-# React + TypeScript + Vite
+Проект: Аналитика CSV файлов
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Структура проекта
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
+``` text
+src/
+├── api/
+│   ├── aggregate.ts        # API для агрегации данных из CSV
+│   ├── client.ts          # Базовый клиент для API запросов
+│   ├── config.ts          # Конфигурация API (базовый URL)
+│   └── reportApi.ts       # API для генерации отчетов
+│
+├── assets/                # Статические файлы (изображения, иконки)
+│
+├── components/
+│   ├── AppLayout/         # Основной layout приложения
+│   ├── Button/            # Компонент кнопки
+│   ├── ButtonUpload/      # Компонент кнопки для загрузки файлов
+│   ├── ErrorPage/         # Страница ошибки
+│   ├── Modal/             # Модальное окно
+│   └── ResultsGrid/       # Компонент для отображения результатов
+│
+├── hooks/
+│   └── useGenerateReport/ # Хук для генерации отчетов
+│
+├── pages/
+│   ├── AnalyticsPage/     # Страница анализа CSV файлов
+│   ├── GeneratorPage/     # Страница генерации отчетов
+│   └── HistoryPage/       # Страница истории операций
+│
+├── store/
+│   └── historyStore.ts    # Хранилище Zustand для истории операций
+│
+├── types/                 # Типы TypeScript
+│
+├── App.tsx                # Корневой компонент приложения
+├── index.tsx              # Точка входа
+└── router.tsx             # Конфигурация маршрутизации
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Основные страницы
+AnalyticsPage - главная страница для загрузки и анализа CSV файлов:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
+Загрузка файлов через drag-n-drop или кнопку
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-});
+Отображение прогресса обработки
+
+## Визуализация результатов
+
+GeneratorPage - страница генерации CSV отчетов:
+
+Однокнопочная генерация отчетов
+
+Отображение статуса генерации
+
+HistoryPage - история выполненных операций:
+
+Просмотр предыдущих результатов
+
+Удаление записей
+
+Очистка всей истории
+
+## API
+Проект использует следующие API endpoints:
+
+POST /aggregate - обработка CSV файла
+
+GET /report - генерация CSV отчета
+
+Базовый URL API настраивается в config.ts.
+
+## Состояние приложения
+Для управления историей операций используется хранилище Zustand (historyStore.ts) с persistence в localStorage.
+
+## Запуск проекта
+Установите зависимости:
+
 ```
+bash
+npm install
+```
+Запустите development сервер:
+```
+bash
+npm run dev
+```
+Особенности реализации
+Обработка больших файлов:
+
+Используется потоковая обработка данных
+
+Прогрессивное отображение частичных результатов
+
+UI компоненты:
+
+Кастомные кнопки с различными состояниями
+
+Drag-n-drop зона для загрузки файлов
+
+Обработка ошибок:
+
+Валидация формата файлов
+
+Отображение понятных сообщений об ошибках
+
+Настройка окружения
+Для работы с API необходимо указать корректный базовый URL в src/api/config.ts.
+
+Зависимости
+Основные зависимости:
+
+React + TypeScript
+
+Zustand (state management)
+
+React Router (навигация)
+
+Vite (сборка)
