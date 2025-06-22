@@ -3,7 +3,7 @@ import { NavigationMenu } from '../NavigationMenu/NavigationMenu';
 import styles from './Header.module.css';
 import uploadIcon from '../../assets/upload.png';
 import generatorIcon from '../../assets/generator.png';
-import historyIcon from '../../assets/history.png'
+import historyIcon from '../../assets/history.png';
 
 const menuItems = [
   { to: '/', iconSrc: uploadIcon, label: 'CSV Аналитик' },

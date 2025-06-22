@@ -3,7 +3,7 @@ import { API_BASE_URL } from './config';
 export const fetchAggregate = async (
   rows: number,
   file?: File,
-  onChunk?: (chunk: AggregateResponse) => void
+  onChunk?: (chunk: AggregateResponse) => void,
 ): Promise<AggregateResponse[]> => {
   const csvFile = file;
   const formData = new FormData();
@@ -17,19 +17,19 @@ export const fetchAggregate = async (
 
     if (!response.ok) {
       const error = await tryParseError(response);
-      throw new Error(error || `HTTP error ${response.status}`);
+      throw new Error('Ошибка обработки файла');
     }
 
     return await processStreamResponse(response, onChunk);
   } catch (error) {
     console.error('Aggregation failed:', error);
-    throw error;
+    throw new Error('упс, не то...');
   }
 };
 
 const processStreamResponse = async (
   response: Response,
-  onChunk?: (chunk: AggregateResponse) => void
+  onChunk?: (chunk: AggregateResponse) => void,
 ): Promise<AggregateResponse[]> => {
   const reader = response.body?.getReader();
   if (!reader) throw new Error('No response body');

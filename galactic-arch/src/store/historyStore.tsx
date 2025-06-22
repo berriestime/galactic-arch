@@ -1,42 +1,40 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+import { HistoryRecord, HistoryRecords } from '../types/history';
 
-interface HistoryItem {
-  id: string;
-  timestamp: number;
-  params: any;
-  dataPreview: any;
-}
-
-interface HistoryState {
-  items: HistoryItem[];
-  addItem: (item: Omit<HistoryItem, 'id' | 'timestamp'>) => void;
-  removeItem: (id: string) => void;
+type HistoryState = {
+  records: HistoryRecords;
+  addRecord: (record: Omit<HistoryRecord, 'id'>) => void;
+  removeRecord: (id: string) => void;
   clearHistory: () => void;
-}
+};
 
-const useHistoryStore = create<HistoryState>((set) => ({
-  items: JSON.parse(localStorage.getItem('report-history') || '[]'),
-  addItem: (item) => 
-    set((state) => {
-      const newItem = {
-        ...item,
-        id: Math.random().toString(36).substring(2, 9),
-        timestamp: Date.now(),
-      };
-      const newItems = [newItem, ...state.items].slice(0, 50); // Limit to 50 items
-      localStorage.setItem('report-history', JSON.stringify(newItems));
-      return { items: newItems };
+const useHistoryStore = create<HistoryState>()(
+  persist(
+    (set) => ({
+      records: [],
+      addRecord: (record) =>
+        set((state) => ({
+          records: [
+            ...state.records,
+            {
+              ...record,
+              id: Date.now().toString(),
+              date: new Date().toISOString(),
+            },
+          ],
+        })),
+      removeRecord: (id) =>
+        set((state) => ({
+          records: state.records.filter((record) => record.id !== id),
+        })),
+      clearHistory: () => set({ records: [] }),
     }),
-  removeItem: (id) => 
-    set((state) => {
-      const newItems = state.items.filter(item => item.id !== id);
-      localStorage.setItem('report-history', JSON.stringify(newItems));
-      return { items: newItems };
-    }),
-  clearHistory: () => {
-    localStorage.removeItem('report-history');
-    set({ items: [] });
-  },
-}));
+    {
+      name: 'parsing-history-storage',
+      getStorage: () => localStorage,
+    },
+  ),
+);
 
-export { useHistoryStore }
+export { useHistoryStore };

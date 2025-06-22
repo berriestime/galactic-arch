@@ -6,14 +6,12 @@
 }
 
 .button {
-  min-inline-size: 360px;
+  white-space: nowrap;
   padding: 20px 28px;
   border-radius: 25px;
   border: none;
   cursor: pointer;
-  font-size: 35px;
   line-height: 1.1;
-  font-weight: 500;
   margin-block-start: 20px;
   min-block-size: 70px;
   display: flex;
@@ -21,6 +19,8 @@
   justify-content: center;
   background-color: var(--green);
   color: inherit;
+  font-size: var(--button-font-size);
+  font-weight: normal;
 }
 
 .button:disabled {
@@ -99,4 +99,10 @@
 .disabled2 {
   background-color: var(--silver);
   color: var(--gray-200);
+}
+
+.clear {
+  background-color: var(--gray-300);
+  width: min-content;
+  color: var(--white);
 }

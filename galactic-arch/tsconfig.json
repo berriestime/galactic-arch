@@ -28,10 +28,5 @@
     "vite.config.ts",
     "types/**/*.d.ts"
   ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/*.spec.ts",
-    "**/eslint.config.cjs"
-  ]
+  "exclude": ["node_modules", "dist", "**/*.spec.ts", "**/eslint.config.cjs"]
 }

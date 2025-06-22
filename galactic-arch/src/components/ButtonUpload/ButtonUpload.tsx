@@ -2,30 +2,30 @@ import styles from './ButtonUpload.module.css';
 
 type ButtonUploadProps = {
   children: React.ReactNode;
-  onFileSelect: (file: File) => void;
+  onFileSelect?: (file: File) => void;
+  onClick?: () => void;
   disabled?: boolean;
   className?: string;
   hasFile?: boolean;
   onClose?: () => void;
   isDragging?: boolean;
-  isLoading?: boolean;
-  isComplete?: boolean;
+  status?: 'idle' | 'loading' | 'success' | 'error';
 };
 
 const ButtonUpload = ({
   children,
   onFileSelect,
+  onClick,
   disabled = false,
   hasFile = false,
   className = '',
   onClose,
   isDragging = false,
-  isLoading = false,
-  isComplete = false,
+  status = 'idle',
 }: ButtonUploadProps) => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) onFileSelect(file);
+    if (file && onFileSelect) onFileSelect(file);
   };
 
   return (
@@ -35,27 +35,42 @@ const ButtonUpload = ({
           ${styles.uploadLabel} 
           ${disabled ? styles.disabled : ''} 
           ${hasFile ? styles.hasFile : ''}
-          ${isLoading ? styles.uploading : ''}
-          ${isComplete ? styles.complete : ''}
+          ${status === 'loading' ? styles.loading : ''}
+          ${status === 'success' ? styles.success : ''}
+          ${status === 'error' ? styles.error : ''}
           ${className}
         `}
+        onClick={
+          onClick
+            ? (e) => {
+                if (!onFileSelect) {
+                  e.preventDefault();
+                  onClick();
+                }
+              }
+            : undefined
+        }
       >
-        {isLoading ? (
-          <>
-            <span className={styles.loader} />
-          </>
+        {status === 'loading' ? (
+          <span className={styles.loader} />
+        ) : status === 'success' ? (
+          'Done!'
+        ) : status === 'error' ? (
+          'Ошибка'
         ) : (
           children
         )}
-        <input
-          type="file"
-          accept=".csv, text/csv"
-          onChange={handleFileChange}
-          disabled={disabled}
-          className={styles.uploadInput}
-        />
+        {onFileSelect && (
+          <input
+            type="file"
+            accept=".csv, text/csv"
+            onChange={handleFileChange}
+            disabled={disabled || status !== 'idle'}
+            className={styles.uploadInput}
+          />
+        )}
       </label>
-      {!isLoading && hasFile && (
+      {(status === 'success' || status === 'error' || (!status && !hasFile)) && onClose && (
         <button className={styles.closeButton} onClick={onClose} aria-label="Close"></button>
       )}
     </div>

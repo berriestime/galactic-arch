@@ -23,7 +23,7 @@ const Button = ({
       type="button"
       onClick={onClick}
       disabled={disabled || status !== 'idle'}
-      className={`${styles.button} ${styles[status]} ${disabled2 ? styles.disabled2 : ''}`}
+      className={`${styles.button} ${styles[status]} ${status === 'clear' ? styles.clear : ''} ${disabled2 ? styles.disabled2 : ''}`}
     >
       {status === 'loading' ? (
         <>
@@ -38,14 +38,9 @@ const Button = ({
       )}
     </button>
     {(status === 'success' || status === 'error') && (
-      <button 
-        className={styles.closeButton}
-        onClick={onClose}
-        aria-label="Close"
-      >
-      </button>
+      <button className={styles.closeButton} onClick={onClose} aria-label="Close"></button>
     )}
   </div>
 );
 
-export { Button }
+export { Button };

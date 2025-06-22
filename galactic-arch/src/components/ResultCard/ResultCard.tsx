@@ -5,7 +5,8 @@ type ResultCardProps = {
   label: string;
 };
 
-export const ResultCard = ({ value, label }: ResultCardProps) => {
+const ResultCard = ({ value, label }: ResultCardProps) => {
+  console.log(value);
   return (
     <div className={styles.card}>
       <div className={styles.value}>{value}</div>
@@ -13,3 +14,5 @@ export const ResultCard = ({ value, label }: ResultCardProps) => {
     </div>
   );
 };
+
+export { ResultCard };

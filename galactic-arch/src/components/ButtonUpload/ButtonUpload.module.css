@@ -15,7 +15,7 @@
   font-size: 35px;
   line-height: 1.1;
   font-weight: normal;
-    display: flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   flex: 1;
@@ -93,4 +93,74 @@
 
 .uploadLabel.complete {
   background-color: var(--pang);
+}
+
+.uploadLabel.loading {
+  background-color: var(--purple-300);
+  min-width: 330px;
+}
+
+.uploadLabel.success {
+  background-color: var(--pang);
+  min-inline-size: min-content;
+  font-weight: normal;
+  padding-block-start: 15px;
+  padding-block-end: 15px;
+  border-radius: 10px;
+}
+
+.uploadLabel.error {
+  background-color: var(--orange);
+  min-inline-size: min-content;
+  font-weight: normal;
+  padding-block-start: 15px;
+  padding-block-end: 15px;
+  border-radius: 10px;
+  color: var(--white);
+}
+
+.closeButton {
+  position: relative;
+  inline-size: min-content;
+  inline-size: 70px;
+  block-size: 70px;
+  border-radius: 10px;
+  background-color: var(--gray-300);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeButton::before,
+.closeButton::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 2px;
+  background-color: var(--white);
+}
+
+.closeButton::before {
+  transform: rotate(45deg);
+}
+
+.closeButton::after {
+  transform: rotate(-45deg);
+}
+
+.loader {
+  width: 20px;
+  height: 20px;
+  border: 3px solid var(--white);
+  border-radius: 50%;
+  border-top-color: var(--green);
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }

@@ -15,10 +15,11 @@ type ResultsGridProps = {
 };
 
 const ResultsGrid = ({ data }: ResultsGridProps) => {
-    if (!data) {
+  if (!data) {
     return (
       <div className={styles.placeholder}>
-        Здесь появятся хайлайты
+        Здесь
+        <br /> появятся хайлайты
       </div>
     );
   }
@@ -32,10 +33,7 @@ const ResultsGrid = ({ data }: ResultsGridProps) => {
         <ResultCard value={data.less_spent_civ} label="Цивилизация с минимальными расходами" />
         <ResultCard value={data.big_spent_value} label="День года с максимальными расходами" />
         <ResultCard value={data.big_spent_at} label="Максимальная сумма расходов за день" />
-        <ResultCard 
-          value={data.average_spend_galactic} 
-          label="Средние расходы (галактические кредиты)" 
-        />
+        <ResultCard value={data.average_spend_galactic} label="Средние расходы (галактические кредиты)" />
       </div>
     </div>
   );

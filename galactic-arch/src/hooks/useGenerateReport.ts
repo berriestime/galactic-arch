@@ -2,23 +2,23 @@ import { useState } from 'react';
 import { generateReport } from '../api/reportApi';
 
 const useGenerateReport = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<boolean>(false);
 
   const handleGenerate = async () => {
-    setIsLoading(true);
-    setError(null);
-    
+    setError(false);
     try {
       await generateReport();
+      return true;
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unknown error');
-    } finally {
-      setIsLoading(false);
+      setError(true);
+      throw err; // Пробрасываем ошибку дальше для логирования
     }
   };
 
-  return { handleGenerate, isLoading, error };
+  return {
+    handleGenerate,
+    error,
+  };
 };
 
 export { useGenerateReport };

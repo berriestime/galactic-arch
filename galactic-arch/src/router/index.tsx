@@ -7,21 +7,21 @@ import { GeneratorPage } from '../pages/GeneratorPage/GeneratorPage';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <AppLayout />,
     errorElement: <ErrorPage />,
     children: [
-            {
+      {
         index: true,
         element: <AnalyticsPage />,
       },
       {
-        path: "generator",
+        path: 'generator',
         element: <GeneratorPage />,
       },
       {
-        path: "history",
-        element: <HistoryPage/>,
+        path: 'history',
+        element: <HistoryPage />,
       },
     ],
   },

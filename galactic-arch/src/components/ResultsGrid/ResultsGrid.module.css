@@ -13,4 +13,7 @@
 .placeholder {
   font-size: 40px;
   color: var(--purple-300);
+  flex: 1 0 auto;
+  display: flex;
+  align-items: center;
 }
